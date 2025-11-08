@@ -244,18 +244,16 @@ class EveRApp(QMainWindow):
         self.ram_field = QLineEdit()
         self.flash_field = QLineEdit()
         
-        # Widżety zakładki Aplikacje
         self.config_tabs = QTabWidget()
         self.refresh_apps_button = QPushButton("Refresh apps from device")
         self.apps_tree = QTreeWidget()
         
-        self.play_button = QPushButton("Play")
-        self.pause_button = QPushButton("Pause")
-        self.stop_button = QPushButton("Stop")
-        self.prev_button = QPushButton("Prev")
-        self.next_button = QPushButton("Next")
-        self.vol_up_button = QPushButton("VolUp")
-        self.vol_down_button = QPushButton("VolDown")
+        self.play_button = QPushButton("Play >")
+        self.pause_button = QPushButton("Pause ||")
+        self.prev_button = QPushButton("<< Prev")
+        self.next_button = QPushButton("Next >>")
+        self.vol_up_button = QPushButton("Vol+")
+        self.vol_down_button = QPushButton("Vol-")
         
         self.tray_icon = QSystemTrayIcon(self)
         
@@ -346,10 +344,8 @@ class EveRApp(QMainWindow):
         config_tab = QWidget()
         config_layout = QVBoxLayout()
         config_tab.setLayout(config_layout)
-
         config_layout.addWidget(self.config_tabs)
         self.config_tabs.currentChanged.connect(self.on_config_sub_tab_changed)
-
         # 1. Pod-zakładka "Main"
         main_config_tab = QWidget()
         main_config_layout = QVBoxLayout()
@@ -383,7 +379,6 @@ class EveRApp(QMainWindow):
         self.flash_field.setReadOnly(True); form_layout.addRow(QLabel("Flash:")); form_layout.addRow(self.flash_field)
         main_config_layout.addLayout(form_layout)
         main_config_layout.addStretch()
-
         # 2. Pod-zakładka "Apps"
         apps_tab = QWidget()
         apps_layout = QVBoxLayout()
@@ -395,10 +390,8 @@ class EveRApp(QMainWindow):
         self.apps_tree.header().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         self.apps_tree.header().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
         apps_layout.addWidget(self.apps_tree)
-        
         self.config_tabs.addTab(main_config_tab, "Main")
         self.apps_tab_index = self.config_tabs.addTab(apps_tab, "Apps")
-        
         self.config_tab_index = tabs.addTab(config_tab, "Configuration")
 
         # Player Control Buttons
@@ -406,12 +399,10 @@ class EveRApp(QMainWindow):
         self.prev_button.clicked.connect(lambda: self.send_player_command("playPrevious"))
         self.play_button.clicked.connect(lambda: self.send_player_command("start"))
         self.pause_button.clicked.connect(lambda: self.send_player_command("pause"))
-        self.stop_button.clicked.connect(lambda: self.send_player_command("stop"))
         self.next_button.clicked.connect(lambda: self.send_player_command("playNext"))
-        button_layout.addWidget(self.prev_button)
         button_layout.addWidget(self.play_button)
         button_layout.addWidget(self.pause_button)
-        button_layout.addWidget(self.stop_button)
+        button_layout.addWidget(self.prev_button)
         button_layout.addWidget(self.next_button)
         main_layout.addLayout(button_layout)
         
